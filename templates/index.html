@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <header>
+    <!-- place navbar here -->
+  </header>
+  <main>
+    <div class='container'>
+
+<form  action='/emp/' method="POST">
+    {% csrf_token %}
+    <div class="row mt-5">
+        <div class="offset-4 col-md-4">
+            <center>
+            <h4 id="heading" class="text-warning">ADD EMPLOYEE</h4></center>
+  </hr>
+            <div class="mb-3">
+  <input value='' id='id' name="id" hidden />
+  <label for="" class="form-label">Email</label>
+  <input type="email" id='email' class="form-control" name="email"  aria-describedby="emailHelpId" placeholder="Enter Email...">
+  <label for="" class="form-label">Name</label>
+  <input type="text" id='name' class="form-control" name="name"  aria-describedby="emailHelpId" placeholder="Enter Name...">
+  <label for="" class="form-label">City</label>
+  <input type="text" id='city' class="form-control" name="city"  aria-describedby="emailHelpId" placeholder="Enter Address...">
+  <label for=""  class="form-label">Profession</label>
+  <input type="text" class="form-control" id='profession' name="profession"  aria-describedby="emailHelpId" placeholder="Enter Profession...">
+
+  <input type="submit" id="btn-upd" value='Add Employee' class="mt-2 form-control btn btn-primary"/>
+</div>
+
+        </div>
+    </div>
+</form>
+
+{% if noOfCount is not 0 %}
+
+    <center><h4  class="text-dark">EMPLOYEES DATA</h4></center>
+
+
+<div class="table-responsive">
+    <table class="table table-light table-primary">
+        <thead>
+            <tr>
+                <th scope="col">Sr.No</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+
+                <th scope="col">City</th>
+                <th scope="col">Profession</th>
+                <th colspan='2'  scope="col">Action</th>
+
+  </tr>
+        </thead>
+        <tbody>
+            {% for rec in noOfRecord  %}
+            <tr id='hid_{{rec.id}}' >
+                <td scope="row"> {{forloop.counter}}</td>
+               <td>
+                    {{rec.name}}
+                </td>
+                
+                <td>{{rec.email}}</td>
+                <td>{{rec.city}}</td>
+                <td>{{rec.profession}}</td>
+                <td ><a href='/emp/{{rec.id}}'><i class="btn fa fa-trash text-danger"></i></a></td>
+                <td ><i class="btn fa fa-edit text-warning" onclick='change_toUpdate("{{rec.id}}","{{rec.name}}","{{rec.email}}","{{rec.city}}","{{rec.profession}}")'></i></td>
+            </tr>
+
+           
+            {% endfor %}
+            
+        </tbody>
+    </table>
+</div>
+{% endif %}
+</div>
+  </main>
+  <footer>
+    <!-- place footer here -->
+  </footer>
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+  <script>
+   function change_toUpdate(id,name,email,city,profession){
+    document.getElementById('email').focus()
+    document.getElementById('heading').innerHTML='Update User Record'
+
+    let btn = document.getElementById('btn-upd')
+    btn.value='Update Employee'
+    btn.classList.remove('btn-primary')
+    btn.classList.add('btn-warning')
+    btn.classList.add('text-white')
+
+
+    
+
+    change_id_value('id',id)
+    change_id_value('name',name)
+    change_id_value('email',email)
+    change_id_value('city',city)
+    change_id_value('profession',profession)
+
+    
+
+
+
+   }
+
+   function change_id_value(id,val){
+    document.getElementById(id).value= val
+   }
+
+  </script>
+</body>
+
+</html>
